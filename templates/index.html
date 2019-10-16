@@ -1,9 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div>
-    <h1>War Room</h1>
+<div class="index-top-wrapper">
+    <div class="row">
+        <div class="col-sm-4 nav-link-left">
+            <a href="/rooms" class="link" id="left-link">Rooms</a>
+        </div>
+        <div class="banner col-sm-4">
+            <img src="{{ url_for("static", filename="war-room-logo-name.png") }}" alt='logo'>
+        </div>
+        <div class="col-sm-4 nav-link-right">
+            <a href="/about" class="link" >About</a>
+        </div>
+    </div>
+    
+</div>
+<div class="index-bottom-wrapper col-sm-12">
+    Don't fight your data, make anywhere your War Room
+    <br>
+    <br>
+    <a href="/room"><button type='button' class="btn btn-outline-danger">Create a room</button></a>
 </div>
 
 {% endblock %}

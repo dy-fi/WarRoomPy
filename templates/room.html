@@ -5,13 +5,18 @@
 
 <h1>{{ room.title }}</h1> 
 <br>
-{% for place in data %}
-    <p>place: {{ place["name"] }}</p>
-    <p>data: {{ place["data"] }}</p>
-    <p>previous values: 
-        {% for value in place["values"] %}
-            {{value}}
-        {% endfor %}
-    </p>
-{% endfor %}
+
+<div class='row'>
+    {% for place in data %}
+        {% with p = place %}
+            {% include "place.html" %}
+        {% endwith %}
+    {% endfor %}
+</div>
+
+
+
+<hr>
+<h3>Add a new target</h3>
+{% include "place-form.html" %}
 {% endblock %}
