@@ -1,3 +1,5 @@
 venv
 .env
 .vscode
+config.py
+db.py
