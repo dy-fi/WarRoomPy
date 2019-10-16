@@ -12,6 +12,10 @@ def ScrapeXpath(url, path):
     print(text)
     return text
 
+def scrapeGenerator(url:str, path:str, interval:int, lazy:bool):
+    text = ScrapeXpath(url, path)
+    yield text
+
 # get multiple data points from multiple xpaths from the same url
 # used for optimization of requests to the same URL
 def ScrapeXpaths(url, paths):

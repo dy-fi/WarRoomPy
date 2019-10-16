@@ -2,16 +2,24 @@ from flask import Flask
 from flask import render_template, request, redirect, url_for
 from flask_pymongo import PyMongo
 from bson import ObjectId
+from flask_socketio import SocketIO
 import scrapper
+
 
 
 # ==============Server Init================
 app = Flask(__name__)
 # config
 app.config.from_pyfile("config.cfg")
+app.config["SECRET_KEY"] = 'not the real secret lol'
 app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
 mongo = PyMongo(app)
 db = mongo.db
+
+# ================Sockets==================
+
+io = SocketIO(app)
+clients = []
 
 # ================Routes===================
 
@@ -104,7 +112,53 @@ def target(room_id):
                 "$pop":
                 {"values": 1}
             })
-            
+
+         # response packaging
+        d = { 
+            "name": place["name"],
+            "values": place["values"]
+        }
+
+        result.append(d)
+        
+    
+    return render_template("room.html", room=room, data=result)
+
+
+@app.route("/room/ws/<room_id>", methods = ["GET"])
+def target_ws(room_id):
+    """
+    display room
+    """
+    
+    # find room or bust!
+    room = db.rooms.find_one({ "_id" : ObjectId(oid=str(room_id)) })
+    print(room)
+    # list of dictionaries after its populated in the proceeding for loop
+    result = []
+    # iterate through places and scrape data
+    for place_id in room["places"]:
+        place = db.places.find_one({ "_id": ObjectId(oid=str(place_id)) })
+        data = scrapper.ScrapeXpath(place["url"], place["path"])
+        print(data)
+
+        # push new val to mongo document
+        db.places.update(
+        {"_id": ObjectId(oid=str(place_id))},
+        {
+            "$push":
+            {"values": data}
+        })
+
+        # pop to keep the value lists at 10
+        if len(place["values"]) > 9:
+            db.places.update(
+            {"_id": ObjectId(oid=str(place_id))},
+            {
+                "$pop":
+                {"values": 1}
+            })
+
          # response packaging
         d = { 
             "name": place["name"],
