@@ -4,5 +4,14 @@
 <h1> ROOM PAGE</h1>
 
 <h1>{{ room.title }}</h1> 
-
+<br>
+{% for place in data %}
+    <p>place: {{ place["name"] }}</p>
+    <p>data: {{ place["data"] }}</p>
+    <p>previous values: 
+        {% for value in place["values"] %}
+            {{value}}
+        {% endfor %}
+    </p>
+{% endfor %}
 {% endblock %}
