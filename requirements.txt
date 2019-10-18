@@ -20,7 +20,6 @@ lxml==4.4.1
 MarkupSafe==1.1.1
 mccabe==0.6.1
 monotonic==1.5
-mysql-connector-python-rf==2.2.2
 protobuf==3.10.0
 pylint==2.4.2
 pymongo==3.9.0
