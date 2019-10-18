@@ -49,3 +49,13 @@ img {
     text-transform: uppercase;
     letter-spacing:2px;
 }
+
+.place-form {
+    margin: auto;
+    content: justify;
+}
+
+#place-card {
+    border: solid grey 1px;
+    
+}

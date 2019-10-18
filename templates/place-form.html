@@ -1,24 +1,33 @@
-<form method='POST' action='/place'>
-    <div class='form-group'>
-        <div class='row'>
-            <div class='col'>
-                <label for='name'>Name</label>
-                <input class='form-control' type='text' id='name' name='name' required>
-            </div>
-            <div class='col'>
-                <label for='url'>URL</label>
-                <input class='form-control' type='text' id='url' name='url' required>
-            </div>
-            <div class='col'>
-                    <label for='path'>XPath</label>
-                    <input class='form-control' type='text' id='path' name='path' required>
-            </div> 
-        </div>
-        
-    </div>
 
-    <!-- BUTTON -->
-    <div class='form-group'>
-        <button class='btn btn-primary btn-block' type='submit'>Add a new target</button>
+<div class='form-group'>
+    <div class='row' id='place-form'>
+        <div class='col-sm-7'>
+            <label for='name'>Name</label>
+            <input class='form-control' type='text' id='name' name='name' required>
+        </div>
+        <br>
+        <div class='col-sm-7'>
+            <label for='url'>URL</label>
+            <input class='form-control' type='text' id='url' name='url' required>
+        </div>
+        <br>
+        <div class='col-sm-7'>
+            <label for='path'>XPath</label>
+            <input class='form-control' type='text' id='path' name='path' required>
+        </div>
+        <br>
+        <div class='col-sm-7'>
+            <label for='interval'>Interval</label>
+            <input class='form-control' type='text' name='interval' value="Custom time (seconds)">
+        </div>
+        <br>
+        <div class='col-sm-7'>
+            <label for='output'>Output type</label><br>
+            <input type="radio" name="output" value="text"> Text<br>
+            <input type="radio" name="output" value="int"> Number<br>
+        </div>
     </div>
-</form>
+</div>
+
+
+

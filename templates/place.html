@@ -1,9 +1,12 @@
-<div class='col-md-5'>
-        <p>place: {{ place["name"] }}</p>
+<div class='col-md-5' id='place-card'>
+        <p>{{ place["name"] }}</p>
         <p>values: 
             <br>
             {% for value in place["values"] %}
-                {{value}} <\t>
+                <div col-sm-1>
+                        {{value}}
+                </div>
+                
             {% endfor %}
         </p>
 </div>

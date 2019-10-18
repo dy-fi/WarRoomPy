@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1> ROOM PAGE</h1>
+<h1>Live ROOM PAGE</h1>
 
 <h1>{{ room.title }}</h1> 
 <br>
 
 <div class='row'>
-    {% for place in data %}
+    {% for place in places %}
         {% with place = place %}
             <div class='col-sm-6'>
-                {% include "place.html" %}
+                {% include "graph.html" %}
             </div>
         {% endwith %}
     {% endfor %}
