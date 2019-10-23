@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block head %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='epoch.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+{% endblock %}
+
+
 {% block content %}
 <div class='row' style='padding-top:10px'>
     <a href='/' class='btn btn-danger'>Home</a>
@@ -64,7 +72,9 @@
     
 {% endblock %}
 {% block scripts %}
+
 <script>
+
 // SOCKETS
 socket.on('connect', function() {
     console.log("socket connected")
@@ -74,7 +84,12 @@ socket.on('connect', function() {
 socket.on('point', (data) => {
     console.log("Point!")
     console.log(data);
-    lineChart.push(data);
+    newPoint = {
+        time: data.time,
+        y: data.y
+    }
+
+    chart.push(newPoint);
 });
 
 socket.on('disconnect', function() {

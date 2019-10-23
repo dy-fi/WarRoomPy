@@ -186,7 +186,7 @@ def handle_room(room_id):
                 data = [int(s) for s in data.split() if s.isdigit()]
                 t = int(time.mktime(datetime.datetime.now().timetuple()))
                 print(t, data)
-                io.emit("point", { "time": t, "y": data, }, "ye" )
+                emit("point", {"name": place["name"], "time": t, "y": data } )
 
 
 
