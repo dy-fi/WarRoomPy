@@ -1,5 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+
 <form method='POST' action='/room'>
-    <div class='row'>
+
         <div class='form-group'>
             <label for='place-name'>Room Name</label>
             <input class='form-control' type='text' id='title' name='title' required>
@@ -7,12 +11,15 @@
 
         <hr>
         <h4>Make your first target for the room!</h4>
-        {% include "place-form.html" %}
+        <div class='place-wrapper'>        
+            {% include "place-form.html" %}
+        </div>
     
         <!-- BUTTON -->
         <hr>
         <div class='form-group'>
             <button class='btn btn-primary btn-block' type='submit'>Make a new room</button>
         </div>
-    </div>
 </form>
+
+{% endblock %}

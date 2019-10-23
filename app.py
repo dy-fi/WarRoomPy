@@ -108,8 +108,6 @@ def target(room_id):
         data = scrapper.ScrapeXpath(place["url"], place["path"], place["interval"])
         # if we find data
         if data != None:
-            data.replace("[", "")
-            data.replace("]", "")
             print(data)
             
             # if the output type is 'int', we'll want to just extract the numerical value from the data

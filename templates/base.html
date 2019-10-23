@@ -16,13 +16,13 @@
     <meta author='dy-fi'>
 
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'>
-    <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='main.css', version=10.2) }}"> 
+    <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='main.css', version=13.3) }}"> 
     {% block head %}{% endblock %}
     <title>War Room</title>
   </head>
   <body>
     
-    <div class='container'>
+    <div class='container' id='base'>
         {% block content %}
 
         {% endblock %}
@@ -30,6 +30,7 @@
 
     {% block scripts %}{% endblock %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+    <script src="{{url_for('static', filename='main.js') }}"
     <script>
         var socket = io.connect('http://localhost:5000');
     </script>
