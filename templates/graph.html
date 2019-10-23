@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='epoch.min.css') }}">
+
 
 <h1 id="live-title">{{ place.name }} connecting...</h1>
 <div id="chart-wrapper col-sm-6">
@@ -7,14 +7,15 @@
 </div>
 
 
+
+{% block scripts %}
+
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='epoch.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
 
-
 <script>
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
     // chart
     // {time: 1571378036, y: 8}, {time: 1571378039, y: 8}
     var chartData = [ { label: "A series", values: [] } ];
@@ -23,26 +24,6 @@
         type: 'time.line',
         data: chartData
     });
-
-    // SOCKETS
-    socket.on('connect', function() {
-        console.log("socket connected")
-        document.getElementById('live-title').innerHTML = "Connected!";
-    });
-
-    socket.on('point', (data) => {
-        console.log("Point!")
-        console.log(data);
-        lineChart.push(data);
-    });
-
-    socket.on('disconnect', function() {
-        socket.emit('stop', { place_id: "{{ place._id }}" })
-    });
-
-    window.onload = function() {
-        socket.emit('room', {room_id: "{{room._id}}" })
-    };
-
-</script>
     
+</script>
+{% endblock %}

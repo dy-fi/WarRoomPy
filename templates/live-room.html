@@ -12,7 +12,7 @@
 <hr>
 
 <div class='row'>
-    {% for place in data %}
+    {% for place in places %}
         {% with place = place %}
             <div class='col-sm-6' id='place-wrapper'>
                 {% include "graph.html" %}
@@ -62,4 +62,28 @@
 
 
     
+{% endblock %}
+{% block scripts %}
+<script>
+// SOCKETS
+socket.on('connect', function() {
+    console.log("socket connected")
+    document.getElementById('live-title').innerHTML = "Connected!";
+});
+
+socket.on('point', (data) => {
+    console.log("Point!")
+    console.log(data);
+    lineChart.push(data);
+});
+
+socket.on('disconnect', function() {
+    socket.emit('stop', { room_id: "{{ room._id }}" })
+});
+
+window.onload = function() {
+    socket.emit('room', {room_id: "{{room._id}}" })
+};
+</script>
+
 {% endblock %}

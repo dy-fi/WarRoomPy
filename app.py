@@ -150,11 +150,12 @@ def target(room_id):
 
 @app.route("/target/ws/<room_id>")
 def target_ws(room_id):
-    room = db.rooms.find_one_or_404()
+    room = db.rooms.find_one_or_404(ObjectId(oid=str(room_id)))
     places = []
     for place_id in room["places"]:
         place = db.places.find_one({"_id": ObjectId(oid=str(place_id))})
         places.append(place)
+    print(places)
     return render_template("live-room.html", room=room, places=places)
 
 @io.on("message")
