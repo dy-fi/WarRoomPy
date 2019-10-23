@@ -10,9 +10,19 @@ You'll be prompted for a `URL` and `Xpath` to make a "place".  These places poin
 
 A collection of places makes up the dashboards we call "Rooms", presenting them however you want.
 
+
+# Road Map
+
+* Live graphs
+
+* Better frontend
+
+* User Authentication
+
 -----
 
 ## Running Locally
+
 Make sure you have [Python 3](https://docs.python.org/3/) and [MongoDB](https://www.mongodb.com/) installed.
 
 ```sh
@@ -37,8 +47,13 @@ Coming soon!
 * [Gunicorn](https://gunicorn.org/) - Web Server
 
 ## Deployed With
-* [Docker](https://www.docker.com/) - Containerization and Cluster Fabrication
-* [Heroku](heroku.com) - VPS cloud hosting
+
+[Docker](https://www.docker.com/) - Containerization and Cluster Fabrication (coming soon)
+
+
+Staging - [Heroku](heroku.com) - VPS cloud hosting
+
+Production - Coming Soon
 
 ---
 
