@@ -158,6 +158,10 @@ def target_ws(room_id):
     print(places)
     return render_template("live-room.html", room=room, places=places)
 
+@io.on("connect")
+def handle_connection():
+    print("Connected to a client")
+
 @io.on("message")
 def handle_message(msg):
     print(msg)
@@ -186,13 +190,17 @@ def handle_room(room_id):
                 data = [int(s) for s in data.split() if s.isdigit()]
                 t = int(time.mktime(datetime.datetime.now().timetuple()))
                 print(t, data)
-                emit("point", {"name": place["name"], "time": t, "y": data } )
+                emit("point", { "data": { "name": place["name"], "time": t, "y": data } } )
+                io.sleep(1)
 
 
+@io.on_error()
+def handle_error(e):
+    print(e)
 
 @io.on('disconnect')
 def bye():
-    print("server disconnected")
+    print("client disconnected")
 
 
 # ================Places===================
