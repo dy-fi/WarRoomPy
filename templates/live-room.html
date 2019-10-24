@@ -20,13 +20,20 @@
 <hr>
 
 <div class='row'>
-    {% for place in places %}
+        <div id='chart' class="epoch category10" style="height:200px; width:200px"></div>
+
+    <!-- {% for place in places %}
         {% with place = place %}
             <div class='col-sm-6' id='place-wrapper'>
-                {% include "graph.html" %}
+                <h1 id="live-title">{{ place.name }} connecting...</h1>
+                <div id="chart-wrapper col-sm-6">
+                    <div id='graph' class="epoch category10" style="height:200px; width:200px"></div>
+                    <p>Latest point: </p>
+                </div>
             </div>
         {% endwith %}
-    {% endfor %}
+    {% endfor %} -->
+
 </div>
 <hr>
 <div class='row'>
@@ -74,21 +81,51 @@
 {% block scripts %}
 
 <script>
+    // var charts = new Map()
+
+    // {% for place in places %}
+      
+            address = btoa( "{{place.name}}" )
+            console.log(address)
+
+            var chartData = [
+                // The first layer
+                {
+                    label: "Series",
+                    range: "range-l",
+                    values: [],
+                },
+            ];
+            
+            var chart = $('#chart').epoch({
+                type: 'time.line',
+                data: chartData,
+                axes: ['left', 'bottom']
+            });
+
+            // charts.set(address, chart); 
+    
+    // {% endfor %} 
 
     // SOCKETS
-    socket.on('connect', function() {
-        console.log("socket connected")
-        document.getElementById('live-title').innerHTML = "Connected!";
-    });
+    // socket.on('connect', function() {
+    //     console.log("socket connected")
+    //     document.getElementById('live-title').innerHTML = "Connected!";
+    // });
 
     socket.on('point', (data) => {
-        console.log("Point!")
+     
         console.log(data);
-        newPoint = {
-            time: data.time,
-            y: data.y
-        }
+        var y = data.y[0]
+        console.log(y)
 
+        var newPoint = [{
+            label: "Series",
+            values: [{ time: data.time, y: y}]
+        }]
+
+        console.log(newPoint)
+        address = btoa(data.name);
         chart.push(newPoint);
     });
 
