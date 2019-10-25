@@ -1,5 +1,6 @@
 .banner {
-    text-align: center;    
+    text-align: center;
+    margin-top: -2%; 
 }
 
 #base {
@@ -15,7 +16,7 @@
     padding:0px;
     margin:0px;
     left:0px;
-    position:fixed;
+    position: absolute;
 }
 
 img {
@@ -23,21 +24,20 @@ img {
 }
 
 .index-bottom-wrapper {
-    padding-top: 32%;
+    padding-top: 42%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    position: fixed;
 }
 
 .nav-link-right {
     text-align: left;
-    padding-top:200px;
+    padding-top:150px;
 }
 
 .nav-link-left {
     text-align: right;
-    padding-top:200px;
+    padding-top:150px;
 }
 
 .link {

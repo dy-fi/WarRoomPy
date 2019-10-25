@@ -4,7 +4,7 @@
 <div class="index-top-wrapper">
     <div class="row">
         <div class="col-sm-4 nav-link-left">
-            <a href="/rooms" class="link" id="left-link">Rooms</a>
+            <a href="/rooms" class="link">Rooms</a>
             <br><br>
             <a href="/how-to-use" class="link">How to Use</a>
             <br><br>
@@ -22,17 +22,17 @@
         </div>
     </div>  
 </div>
+<br>
 <div class='row index-bottom-wrapper'>
     <div class='col-sm-6'>
         <img src="{{ url_for("static", filename="smart-city.png") }}" style="height:500px; width:700px; padding-bottom:10%; margin-bottom:20%; margin-top:-20%; margin-left:-33%;" alt='front-image'>
     </div>
-    <div class='col-sm-6' style='margin-top:10%;'>
+    <div class='col-sm-6' style='margin-top:10%; right:-5%;'>
         With some copy and pasting, make anywhere your War Room
         <br>
         <br>
         <a href="/room"><button type='button' class="btn btn-block btn-outline-primary">Create a room</button></a>
     </div>
 </div>
-
 
 {% endblock %}
