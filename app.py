@@ -91,7 +91,7 @@ def show_rooms():
     return render_template("rooms.html", rooms=rooms)
 
 
-@app.route("/room/<room_id>", methods = ["GET"])
+@app.route("/target/<room_id>", methods = ["GET"])
 def target(room_id):
     """
     display room
@@ -194,8 +194,9 @@ def handle_room(room_id):
                 io.sleep(0.1)
 
 @io.on('stop')
-def bye(room_id):
-    clients[room_id] = False
+def bye(msg):
+    print(msg)
+    clients[msg.room_id] = False
 
 
 @io.on_error()
@@ -239,8 +240,6 @@ def make_place():
     })
     # redirect to room
     return redirect(url_for("target", room_id=room_id))
-
-
 
 
 if __name__ == '__main__':

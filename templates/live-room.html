@@ -127,11 +127,6 @@
         console.log(e);
     });
 
-    socket.on('disconnect', function() {
-        console.log("socket disconnected")
-        socket.emit('stop', { room_id: "{{ room._id }}" })
-    });
-
     window.onload = function() {
         socket.emit('room', {room_id: "{{room._id}}" })
 
@@ -156,7 +151,14 @@
             });
 
         {% endfor %} 
+
+        
+        window.addEventListener("unload", function() { 
+            socket.emit('stop', {room_id: "{{room._id}}" })
+        });
     };
+
+    
 
 </script>
 
