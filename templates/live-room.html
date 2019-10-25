@@ -83,12 +83,18 @@
 {% block scripts %}
 
 <script>
+    // Thus begins the weirdest but most solid front end JS I've ever
+    // written.  I mixed templating syntax with JS
+    // code (WHICH YOU SHOULD NEVER DO) and mapped everything to produce 
+    //as many charts as you want.  Client Side you won't see the
+    // templating, just the ugly un-DRY looking code it generates.  
 
     // Globals
     var charts = {}
     var points = {}
     var dataLength = 20;
 
+    // for y value
     function getTimestamp() {
         var ts = Math.round((new Date()).getTime() / 1000);
         return ts
@@ -152,7 +158,7 @@
 
         {% endfor %} 
 
-        
+
         window.addEventListener("unload", function() { 
             socket.emit('stop', {room_id: "{{room._id}}" })
         });

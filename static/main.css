@@ -23,9 +23,11 @@ img {
 }
 
 .index-bottom-wrapper {
-    top: 500px;
+    padding-top: 32%;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
-    margin: auto;
+    position: fixed;
 }
 
 .nav-link-right {
@@ -35,7 +37,7 @@ img {
 
 .nav-link-left {
     text-align: right;
-    padding-top:200px
+    padding-top:200px;
 }
 
 .link {
