@@ -25,7 +25,7 @@ db = mongo.db
 # ================Sockets==================
 
 io = SocketIO(app)
-
+clients = {}
 
 # ================Routes===================
 
@@ -172,10 +172,10 @@ def handle_room(room_id):
     # unpackage value from dict
     room_id = room_id["room_id"]
     # find the id in db
-    room = db.rooms.find_one({"_id": ObjectId(oid=str(room_id))})
+    room = db.rooms.find_one_or_404({"_id": ObjectId(oid=str(room_id))})
     # if we found the room
     if room != None:
-        
+        clients[room_id] = True
         # list of places so we dont have to keep looking them up
         places = []
         for place_id in room["places"]:
@@ -184,23 +184,25 @@ def handle_room(room_id):
                 places.append(place)
                
         # iterate through places and scrape data
-        while True:
+        while clients[room_id]:
             for place in places:
                 data = scrapper.ScrapeXpath(place["url"], place["path"], place["interval"])
                 data = [int(s) for s in data.split() if s.isdigit()]
-                t = int(time.mktime(datetime.datetime.now().timetuple()))
+                t = int(time.time())
                 print(t, data)
-                emit("point",{ "name": str(place["name"]), "time": t, "y": data })
-                io.sleep(0)
+                emit("point",{ "name": place["name"], "x": t, "y": data })
+                io.sleep(0.1)
+
+@io.on('stop')
+def bye(room_id):
+    clients[room_id] = False
 
 
 @io.on_error()
 def handle_error(e):
     print(e)
 
-@io.on('disconnect')
-def bye():
-    print("client disconnected")
+
 
 
 # ================Places===================
@@ -237,6 +239,9 @@ def make_place():
     })
     # redirect to room
     return redirect(url_for("target", room_id=room_id))
+
+
+
 
 if __name__ == '__main__':
     io.run(app, debug=True, host='localhost', port=5000)
