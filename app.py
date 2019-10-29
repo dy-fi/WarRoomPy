@@ -196,7 +196,7 @@ def handle_room(room_id):
 @io.on('stop')
 def bye(msg):
     print(msg)
-    clients[msg.room_id] = False
+    clients[msg["room_id"]] = False
 
 
 @io.on_error()

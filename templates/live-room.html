@@ -2,8 +2,6 @@
 
 {% block head %}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='epoch.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
@@ -23,8 +21,6 @@
 <hr>
 
 <div class='row'>
-        <div id='chart' class="epoch category10" style="height:200px; width:200px"></div>
-
     {% for place in places %}
         {% with place = place %}
             <div id='place-wrapper'>
@@ -39,6 +35,7 @@
 </div>
 <hr>
 <div class='row'>
+    <!-- NEW PLACE FORM -->
     <div class='place-form col-sm-5'>
         
         <img src='{{url_for('static', filename='finder-icon.png')}}' style='padding-top:3px; padding-left:0px; margin-top: 0px; margin-left: -10px; border: 0; height:80px; width:80px;'>
@@ -58,7 +55,7 @@
         <div id='vertical-divider'></div>
     </div>
     
-
+    <!-- SETTINGS -->
     <div class='col-sm-5'>
         <img src='{{ url_for('static', filename='settings-icon.png') }}' style='height:60px; width:60px; margin-top:15px; margin-left:0px; padding: 0px 0px 4px;'>
         <form method='POST' action='/edit-room'>
@@ -85,9 +82,10 @@
 <script>
     // Thus begins the weirdest but most solid front end JS I've ever
     // written.  I mixed templating syntax with JS
-    // code (WHICH YOU SHOULD NEVER DO) and mapped everything to produce 
-    //as many charts as you want.  Client Side you won't see the
-    // templating, just the ugly un-DRY looking code it generates.  
+    // code (WHICH YOU SHOULD NEVER DO) and mapped everything with
+    // dynamically named variables to produce as many charts as you want.  
+    // Client Side you won't see the templating, just the ugly un-DRY 
+    // looking code it generates.  
 
     // Globals
     var charts = {}
