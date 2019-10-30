@@ -36,6 +36,14 @@ clients = {}
 def index():
     return render_template("index.html")
 
+@app.route("/how-to", methods = ["GET"])
+def howto():
+    return render_template("how-to.html")
+
+@app.errorhandler(404)
+def fourohfour(error):
+    msg = "Target Lost"
+    return render_template("error.html", msg=msg, err=error)
 
 # ================Rooms====================
 
@@ -193,6 +201,7 @@ def handle_room(room_id):
                 emit("point",{ "name": place["name"], "x": t, "y": data })
                 io.sleep(0.1)
 
+
 @io.on('stop')
 def bye(msg):
     print(msg)
@@ -202,8 +211,6 @@ def bye(msg):
 @io.on_error()
 def handle_error(e):
     print(e)
-
-
 
 
 # ================Places===================
@@ -244,3 +251,5 @@ def make_place():
 
 if __name__ == '__main__':
     io.run(app, debug=True, host='localhost', port=5000)
+
+

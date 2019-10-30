@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div style='margin-left:-15%; margin-top:2%;'>
+    <div class='row'>
+        <h1 class='col-sm-10'>How to use War Room</h1>
+        <a  href="/" class='col-sm-2 btn btn-danger'>Home</a>
+    </div>
+    <br>
+    
+    War Room is a web application designed to make everyone capable of harnessing
+    the most lucrative and prolific resource of the modern era - Data.  Just being
+    computer literate is enough to make impactful visualizations.  Here's how-
+    
+    <hr>
+</div>
+
+
+<div class='row' style='margin-left:-15%;'>    
+    <div class='col-sm-4' style='margin:auto;'>
+        <h2 style="text-decoration:underline;"><b>1 - Find a suitable data point</b></h2>
+        <br>
+        <p>
+            War Room will not let you scrape <i>every</i> point on the web, whether it be blocked,
+            behind some sort of wall we can't simulate like authentication/authorization or captcha,
+            or if it's not allowed by War Room itself.  However, more often than not, all you need is a
+            number or string you want.
+        </p>
+
+        <h2 style="text-decoration:underline;"><b>2 - Point War Room at a target</b></h2>
+        <br>
+        <p>
+            There are 2 necessary elements you need to get from any page you want data from.
+            The <b>URL</b> <i>(i.e. google.com)</i> and the <b>X-Path</b>.  The X-Path is a selector that
+            says where the data is in context of the page.  Here's how we would get the temperature
+            from weather.com:
+        </p>
+    
+    </div>
+
+    <div class='col-sm-8' style='margin:auto;'>
+        
+        <img src="{{ url_for("static", filename="xpath-example.gif") }}" alt="animated" style="height:500px;">
+        Highlight the data, right click, inspect, and on the corresponding element in the inspector copy > copy X Path.
+    
+    </div>
+    
+    
+            
+</div>
+
+
+
+{% endblock %}
