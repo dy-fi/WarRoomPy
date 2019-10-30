@@ -3,3 +3,4 @@ venv
 .vscode
 config.py
 db.py
+.gif
