@@ -1,6 +1,6 @@
 .banner {
     text-align: center;
-    margin-top: -2%; 
+    margin-top: -2%;
 }
 
 #base {
@@ -36,7 +36,7 @@ img {
 }
 
 .nav-link-right {
-    text-align: left;
+    text-align: center;
     padding-top:150px;
 }
 
@@ -47,9 +47,9 @@ img {
 
 .link {
     color: black;
-    text-decoration: underline;
+    text-decoration: bold;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .place-form {
