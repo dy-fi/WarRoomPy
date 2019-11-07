@@ -116,15 +116,14 @@ def target(room_id):
         data = scrapper.ScrapeXpath(place["url"], place["path"], place["interval"])
         # if we find data
         if data != None:
-            print(data)
+            print(data, "----")
             
             # if the output type is 'int', we'll want to just extract the numerical value from the data
             if place['output'] == 'int':    
                 data = [int(s) for s in data.split() if s.isdigit()]
-
+            print(data)
             # time for values
             t = int(time.mktime(datetime.datetime.now().timetuple()))
-
 
             # push new val to mongo document
             db.places.update_one(
@@ -192,7 +191,7 @@ def handle_room(room_id):
                 places.append(place)
                
         # iterate through places and scrape data
-        while clients[room_id]:
+        while clients[room_id] == True:
             for place in places:
                 data = scrapper.ScrapeXpath(place["url"], place["path"], place["interval"])
                 data = [int(s) for s in data.split() if s.isdigit()]
@@ -204,7 +203,8 @@ def handle_room(room_id):
 
 @io.on('stop')
 def bye(msg):
-    print(msg)
+    print("Closed room " + msg["room_id"])
+    # stop room's run loop
     clients[msg["room_id"]] = False
 
 

@@ -7,7 +7,7 @@ path = "//*[@id=\"main-Nowcard-92c6937d-b8c3-4240-b06c-9da9a8b0d22b\"]/div/div/s
 
 # get a single data point from xpath
 def ScrapeXpath(url, path, interval):
-    time.sleep(int(interval))
+    time.sleep(int(interval) - 1)
     page = requests.get(url)
     tree = html.fromstring(page.content)
     text = tree.xpath(path + "/text()")

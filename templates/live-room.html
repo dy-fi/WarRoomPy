@@ -25,7 +25,7 @@
         {% with place = place %}
             <div id='place-wrapper'>
                 <div id="chart-wrapper col-sm-5">
-                    <div id='{{place._id}}-graph' class="epoch category10" style="height:200px; width:200px"></div>
+                    <div id='{{place._id}}-graph' style="height:200px; width:200px"></div>
                     <p id='{{place._id}}-latest'>Latest point: </p>
                 </div>
             </div>
@@ -157,7 +157,7 @@
         {% endfor %} 
 
 
-        window.addEventListener("unload", function() { 
+        window.addEventListener("beforeunload", function() { 
             socket.emit('stop', {room_id: "{{room._id}}" })
         });
     };
