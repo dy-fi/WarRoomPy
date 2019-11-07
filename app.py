@@ -8,6 +8,7 @@ import scrapper
 import time
 import datetime
 import json
+import re
 
 
 # ==============Server Init================
@@ -120,10 +121,11 @@ def target(room_id):
             
             # if the output type is 'int', we'll want to just extract the numerical value from the data
             if place['output'] == 'int':    
-                data = [int(s) for s in data.split() if s.isdigit()]
+                data = float(('').join(re.findall('[\d/.]', data)))
+                
             print(data)
             # time for values
-            t = int(time.mktime(datetime.datetime.now().timetuple()))
+            t = int(time.time())
 
             # push new val to mongo document
             db.places.update_one(
@@ -139,7 +141,7 @@ def target(room_id):
                 {"_id": ObjectId(oid=str(place_id))},
                 {
                     "$pop":
-                    {"values": 1}
+                    {"values": -1}
                 })
 
         # response packaging
@@ -194,11 +196,12 @@ def handle_room(room_id):
         while clients[room_id] == True:
             for place in places:
                 data = scrapper.ScrapeXpath(place["url"], place["path"], place["interval"])
-                data = [int(s) for s in data.split() if s.isdigit()]
+                cleaned_val =  float(('').join(re.findall('[\d/.]', data)))  # [int(s) for s in data.split() if s.isdigit()]
+                print(cleaned_val)
                 t = int(time.time())
                 print(t, data)
-                emit("point",{ "name": place["name"], "x": t, "y": data })
-                io.sleep(0.1)
+                emit("point",{ "name": place["name"], "x": t, "y": cleaned_val })
+                io.sleep(2)
 
 
 @io.on('stop')

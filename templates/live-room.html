@@ -118,7 +118,7 @@
     });
 
     socket.on('point', (data) => {
-        var y = data.y[0]
+        var y = data.y
         console.log(y)
 
         var newPoint = { x: data.time, y: y}
