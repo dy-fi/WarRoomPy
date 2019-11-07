@@ -122,7 +122,7 @@ def target(room_id):
             # if the output type is 'int', we'll want to just extract the numerical value from the data
             if place['output'] == 'int':    
                 data = float(('').join(re.findall('[\d/.]', data)))
-                
+
             print(data)
             # time for values
             t = int(time.time())
@@ -201,7 +201,7 @@ def handle_room(room_id):
                 t = int(time.time())
                 print(t, data)
                 emit("point",{ "name": place["name"], "x": t, "y": cleaned_val })
-                io.sleep(2)
+                io.sleep(0.5)
 
 
 @io.on('stop')
