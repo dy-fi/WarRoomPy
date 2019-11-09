@@ -6,7 +6,7 @@ from bson import ObjectId
 from flask_socketio import SocketIO, send, emit
 import scrapper
 import time
-import datetime
+import datetime 
 import json
 import re
 
@@ -19,7 +19,9 @@ cors = CORS(app, resources={r"/target/ws"})
 # config
 app.config.from_pyfile("config.cfg")
 app.config["SECRET_KEY"] = 'not the real secret lol'
-app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
+
+if app.config['ENV'].lower() == 'development':
+    app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
 mongo = PyMongo(app)
 db = mongo.db
 
@@ -35,7 +37,15 @@ clients = {}
 
 @app.route("/", methods = ["GET"])
 def index():
-    return render_template("index.html")
+
+    btc = db.places.find_one({ "_id" : ObjectId(oid='5dc605ea2fdb37eed4569e78') })
+    data = {}
+
+    for i in btc['values']:
+        try: data['btc'].append({ 'x':i, 'y':time.time() })
+        except: data['btc'] = ({ 'x': i, 'y': time.time() })
+
+    return render_template("index.html", data=data)
 
 @app.route("/how-to", methods = ["GET"])
 def howto():
@@ -164,8 +174,7 @@ def target_ws(room_id):
     for place_id in room["places"]:
         place = db.places.find_one({"_id": ObjectId(oid=str(place_id))})
         places.append(place)
-    print(places)
-    return render_template("live-room.html", room=room, places=places)
+    return render_template("live-room-2.html", room=room, places=places)
 
 @io.on("connect")
 def handle_connection():
@@ -197,7 +206,6 @@ def handle_room(room_id):
             for place in places:
                 data = scrapper.ScrapeXpath(place["url"], place["path"], place["interval"])
                 cleaned_val =  float(('').join(re.findall('[\d/.]', data)))  # [int(s) for s in data.split() if s.isdigit()]
-                print(cleaned_val)
                 t = int(time.time())
                 print(t, data)
                 emit("point",{ "name": place["name"], "x": t, "y": cleaned_val })

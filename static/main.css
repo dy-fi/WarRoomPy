@@ -29,7 +29,6 @@ img {
 
 .index-bottom-wrapper {
     width:100%;
-    padding-top: 42%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -45,6 +44,10 @@ img {
     padding-top:150px;
 }
 
+.chart-wrapper {
+    justify-content: center;
+}
+
 .link {
     color: black;
     text-decoration: bold;
@@ -52,14 +55,11 @@ img {
     letter-spacing: 1px;
 }
 
-.place-form {
-    margin: auto;
+.live-wrapper {
+    padding: 10%;
 }
 
-.place-wrapper {
-    justify-content: center;
-    width: 100%;
-    padding: 4vw;
+.place-form {
     margin: auto;
 }
 
