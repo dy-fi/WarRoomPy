@@ -24,9 +24,7 @@ app.config["SECRET_KEY"] = 'not the real secret lol'
 
 # ==================DB=====================
 
-MONGO_URL = os.environ.get("MONGO_URL")
-if not MONGO_URL:
-    MONGO_URL = "mongodb://localhost:27017/wrdb"
+MONGO_URL = os.getenv("MONGO_URL", default="mongodb://localhost:27017/wrdb")
 
 app.config["MONGO_URI"] = MONGO_URL
 mongo.init_app(app)
