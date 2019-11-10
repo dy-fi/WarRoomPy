@@ -4,12 +4,12 @@ from flask_cors import CORS
 from bson import ObjectId
 from flask_socketio import SocketIO, send, emit
 from database import mongo
+import eventlet
 import scrapper
 import time
 import datetime 
 import json
 import re
-
 
 # ==============Server Init================
 
@@ -20,6 +20,7 @@ cors = CORS(app, resources={r"/target/ws"})
 # config
 app.config.from_pyfile("config.cfg")
 app.config["SECRET_KEY"] = 'not the real secret lol'
+app.config["DEBUG"] = True
 
 
 # ==================DB=====================
@@ -27,8 +28,8 @@ app.config["SECRET_KEY"] = 'not the real secret lol'
 # if app.config['ENV'].lower() == 'development':
 #     app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
 # else:
-app.config["MONGO_URI"] = "mongodb://heroku_r6c7r7n3:ruhocdtre5vj1bt4cf5bjep29j@ds237308.mlab.com:37308/heroku_r6c7r7n3?retryWrites=false"
-# app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
+# app.config["MONGO_URI"] = "mongodb://heroku_r6c7r7n3:ruhocdtre5vj1bt4cf5bjep29j@ds237308.mlab.com:37308/heroku_r6c7r7n3?retryWrites=false"
+app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
 mongo.init_app(app)
 
 db = mongo.db
@@ -48,16 +49,20 @@ app.register_blueprint(target_bp)
 
 # ================Sockets==================
 
+
 io = SocketIO(app)
 clients = {}
+interval = 3
 
 @io.on("connect")
 def handle_connection():
     print("Connected to a client")
 
+
 @io.on("message")
 def handle_message(msg):
     print(msg)
+
 
 @io.on("room")
 def handle_room(room_id):
@@ -80,16 +85,21 @@ def handle_room(room_id):
         while clients[room_id] == True:
             for place in places:
                 if place['output'] == 'int':
-                    try:
-                        data = scrapper.ScrapeXpath(place["url"], place["path"], place["interval"])
-                        cleaned_val =  float(('').join(re.findall('[\d/.]', data)))  # [int(s) for s in data.split() if s.isdigit()]
-                        t = int(time.time())
-                        print(t, data)
-                        emit("point",{ "name": place["name"], "x": t, "y": cleaned_val })
-                        io.sleep(0.2)
-                    except:
-                        emit("point",{ "name": place["name"], "x": t, "y": 0 })
-
+                    # try:
+                    # data
+                    data = scrapper.ScrapeXpath(place["url"], place["path"], interval)
+                    # regex cleaning
+                    cleaned_val =  float(('').join(re.findall('[\d/.]', data)))  # [int(s) for s in data.split() if s.isdigit()]
+                    # timestamp
+                    t = int(time.time())
+                    print(t, data)
+                    # emit to client
+                    emit("point",{ "name": place["name"], "x": t, "y": cleaned_val })
+                    # sleep to not overload socket
+                    io.sleep(0.2)
+                    # except:
+                    #     t = int(time.time())
+                    #     emit("point",{ "name": place["name"], "x": t, "y": 0 })
 
 
 @io.on('stop')
@@ -106,6 +116,6 @@ def handle_error(e):
 
 # module
 if __name__ == '__main__':
-    io.run(app, debug=True, port=5000)
+    io.run(app, debug=True, host="0.0.0.0", port=5000)
 
 

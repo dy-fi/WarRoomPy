@@ -9,7 +9,7 @@ import scrapper
 db = mongo.db
 
 target_bp = Blueprint('target', __name__,template_folder='templates')
-
+interval = 3
 
 @target_bp.route("/target/form", methods = ["POST", "GET"])
 def make_room():
@@ -28,7 +28,6 @@ def make_room():
         name = request.form["name"]
         url = request.form["url"]
         path = request.form["path"]
-        interval = request.form["interval"]
         output = request.form["output"]
 
         # Place struct
@@ -36,7 +35,6 @@ def make_room():
             "name": name,
             "url": url,
             "path": path,
-            "interval": interval,
             "output": output,
             "values": []
         }
@@ -77,7 +75,7 @@ def target(room_id):
     for place_id in room["places"]:
         print(place_id)
         place = db.places.find_one({ "_id": ObjectId(oid=str(place_id)) })
-        data = scrapper.ScrapeXpath(place["url"], place["path"], place["interval"])
+        data = scrapper.ScrapeXpath(place["url"], place["path"], interval)
         # if we find data
         if data != None:
             print(data, "----")
