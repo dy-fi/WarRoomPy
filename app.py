@@ -10,11 +10,12 @@ import time
 import datetime 
 import json
 import re
+import os
 
 # ==============Server Init================
 
 app = Flask(__name__)
-
+port = int(os.environ.get("PORT", 5000))
 # enable CORS where its needed
 cors = CORS(app, resources={r"/target/ws"})
 # config
@@ -116,6 +117,6 @@ def handle_error(e):
 
 # module
 if __name__ == '__main__':
-    io.run(app, debug=True, port=str(port))
+    io.run(app, debug=True, port=port)
 
 
