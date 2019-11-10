@@ -24,7 +24,7 @@ app.config["SECRET_KEY"] = 'not the real secret lol'
 
 # ==================DB=====================
 
-if app.config['ENV'].lower() == 'development':
+if not app.config["MONGO_URI"]:
     app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
 
 mongo.init_app(app)
