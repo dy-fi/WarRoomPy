@@ -50,7 +50,7 @@ def make_room():
         }
         # insert and view the new room
         room_id = db.rooms.insert_one(Room).inserted_id
-        return redirect(url_for("/target", room_id=room_id))
+        return redirect(url_for("target.target", room_id=room_id))
 
 
 @target_bp.route("/targets")
