@@ -9,7 +9,7 @@ import time
 import datetime 
 import json
 import re
-import os
+
 
 # ==============Server Init================
 
@@ -24,9 +24,11 @@ app.config["SECRET_KEY"] = 'not the real secret lol'
 
 # ==================DB=====================
 
-MONGO_URL = os.getenv("MONGOLAB_URI", default="mongodb://localhost:27017/wrdb")
+# if app.config['ENV'].lower() == 'development':
+#     app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
+# else:
+app.config["MONGO_URI"] = mongodb://heroku_r6c7r7n3:ruhocdtre5vj1bt4cf5bjep29j@ds237308.mlab.com:37308/heroku_r6c7r7n3
 
-app.config["MONGO_URI"] = MONGO_URL
 mongo.init_app(app)
 
 db = mongo.db
