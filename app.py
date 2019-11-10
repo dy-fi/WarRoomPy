@@ -28,8 +28,8 @@ app.config["DEBUG"] = True
 # if app.config['ENV'].lower() == 'development':
 #     app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
 # else:
-# app.config["MONGO_URI"] = "mongodb://heroku_r6c7r7n3:ruhocdtre5vj1bt4cf5bjep29j@ds237308.mlab.com:37308/heroku_r6c7r7n3?retryWrites=false"
-app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
+app.config["MONGO_URI"] = "mongodb://heroku_r6c7r7n3:ruhocdtre5vj1bt4cf5bjep29j@ds237308.mlab.com:37308/heroku_r6c7r7n3?retryWrites=false"
+# app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
 mongo.init_app(app)
 
 db = mongo.db
