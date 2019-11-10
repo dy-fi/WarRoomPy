@@ -116,7 +116,7 @@ def handle_error(e):
 
 # module
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get(“PORT”, 5000))
     io.run(app, debug=True, port=port)
 
 
