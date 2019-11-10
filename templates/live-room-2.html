@@ -40,7 +40,7 @@
         
         <img src='{{url_for('static', filename='finder-icon.png')}}' style='padding-top:3px; padding-left:0px; margin-top: 0px; margin-left: -10px; border: 0; height:80px; width:80px;'>
 
-        <form method='POST' action='/place'>
+        <form method='POST' action='/target'>
             <input type='hidden' value='{{ room._id }}' name='room_id'>
             {% include "place-form.html" %}
         
@@ -58,13 +58,13 @@
     <!-- SETTINGS -->
     <div class='col-sm-5'>
         <img src='{{ url_for('static', filename='settings-icon.png') }}' style='height:60px; width:60px; margin-top:15px; margin-left:0px; padding: 0px 0px 4px;'>
-        <form method='POST' action='/edit-room'>
+        <form method='POST' action='/target/edit'>
             <div class='form-group'>
                 <label for='title'>Change Room Title</label>
                 <input class='form-control' name='title' type='text' value='{{ room.title }}'> 
             </div>
         </form>
-        <form method='POST' action='/delete-room'>
+        <form method='POST' action='/target/delete'>
             <input type='hidden' value='{{ room._id }}'>
             <div class='form-group'>
                 <button class='btn btn-block btn-danger'>Delete Room</button>

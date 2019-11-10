@@ -1,13 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Rooms</h1>
+<div class='row'>
+    <h1 class='col-sm-10' style='margin-top:2%;'>Rooms</h1>
+    <a class='btn btn-primary' href='/' style='margin-top:2%;'>Home</a>
+</div>
 
-{% for room in rooms %}
-    {% set room_id = room._id %}
-    <a href="{{url_for("target", room_id = room_id) }}">{{ room.title }}</a> 
-    Places: {{ room.places|length }}
-    <br>
-    <br>
-{% endfor %}
 
+<div class='row' style='padding:30px;'>
+    {% for room in rooms %}
+        {% set room_id = room._id %}
+        <div class='col-sm-3 room_card' style='border:solid 2px lightgrey; border-radius: 25px; padding: 30px; margin:30px;'>
+            <h2>{{ room.title }}</h2>            
+            <br> 
+            Places: {{ room.places|length }}
+            <br>
+            <br>
+            <a class='btn btn-block btn-primary' href="{{url_for("target.target", room_id = room_id) }}">Static</a>
+            <a class='btn btn-block btn-success' href="{{url_for("sockets.targetWS", room_id = room_id) }}">Live</a>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

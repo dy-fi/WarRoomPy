@@ -11,6 +11,12 @@ def ScrapeXpath(url, path, interval):
     page = requests.get(url)
     tree = html.fromstring(page.content)
     text = tree.xpath(path + "/text()")
+    if text == None:
+        for _ in range(3):
+            page = requests.get(url)
+            tree = html.fromstring(page.content)
+            text = tree.xpath(path + "/text()")
+            
     try:
         return text[0]
     except:
