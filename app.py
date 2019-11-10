@@ -116,6 +116,6 @@ def handle_error(e):
 
 # module
 if __name__ == '__main__':
-    io.run(app, debug=True, host="0.0.0.0", port=5000)
+    io.run(app, debug=True, port=5000)
 
 
