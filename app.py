@@ -9,7 +9,7 @@ import time
 import datetime 
 import json
 import re
-
+import os
 
 # ==============Server Init================
 
@@ -24,9 +24,11 @@ app.config["SECRET_KEY"] = 'not the real secret lol'
 
 # ==================DB=====================
 
-if not app.config["MONGO_URI"]:
-    app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
+MONGO_URL = os.environ.get("MONGO_URL")
+if not MONGO_URL:
+    MONGO_URL = "mongodb://localhost:27017/wrdb"
 
+app.config["MONGO_URI"] = MONGO_URL
 mongo.init_app(app)
 
 db = mongo.db
