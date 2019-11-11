@@ -1,5 +1,8 @@
-import eventlet
-eventlet.monkey_patch(socket=True)
+from gevent import monkey
+monkey.patch_all()
+
+import os
+os.environ.setdefault('FORKED_BY_MULTIPROCESSING', '1')
 
 from app import app, io
 

@@ -4,7 +4,6 @@ from flask_cors import CORS
 from bson import ObjectId
 from flask_socketio import SocketIO, send, emit
 from database import mongo
-import eventlet
 import scrapper
 import time
 import datetime 
@@ -50,7 +49,7 @@ app.register_blueprint(target_bp)
 # ================Sockets==================
 
 
-io = SocketIO(app)
+io = SocketIO(app, async_mode="gevent")
 clients = {}
 interval = 3
 
@@ -116,6 +115,6 @@ def handle_error(e):
 
 # module
 if __name__ == '__main__':
-    io.run(app, debug=True, port=int(os.environ.get(“PORT”, 5000)))
+    io.run(app, debug=True, port=int(os.environ.get("PORT", 5000)))
 
 
