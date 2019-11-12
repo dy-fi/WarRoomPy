@@ -32,7 +32,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
     <script src="{{url_for('static', filename='main.js') }}"></script>
     <script>
-        var socket = io.connect('http://localhost:5000');
+        var HOST = location.origin.replace(/^http/, 'ws')
+        var socket = io.connect(HOST, {
+          transports: ['polling', 'websocket'],
+          reconnectionDelay: 1000,
+          reconnection:true,
+          reconnectionAttempts: 5,
+          agent: false, // don't set this to true
+          upgrade: false,
+          rejectUnauthorized: false
+        });
     </script>
     
     {% block scripts %}{% endblock %}

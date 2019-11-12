@@ -1,3 +1,8 @@
+import gevent
+from gevent import monkey;
+monkey.patch_all()
+
+
 from flask import Flask
 from flask import render_template, url_for
 from flask_cors import CORS
@@ -10,12 +15,18 @@ import datetime
 import json
 import re
 import os
+import logging
+
+
 
 # ==============Server Init================
 
 app = Flask(__name__)
-# enable CORS where its needed
-cors = CORS(app, resources={r"/target/ws"})
+
+# enable CORS
+CORS(app)
+logging.getLogger('flask_cors').level = logging.DEBUG
+
 # config
 app.config.from_pyfile("config.cfg")
 app.config["SECRET_KEY"] = 'not the real secret lol'
@@ -24,11 +35,10 @@ app.config["DEBUG"] = True
 
 # ==================DB=====================
 
-# if app.config['ENV'].lower() == 'development':
-#     app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
-# else:
-app.config["MONGO_URI"] = "mongodb://heroku_r6c7r7n3:ruhocdtre5vj1bt4cf5bjep29j@ds237308.mlab.com:37308/heroku_r6c7r7n3?retryWrites=false"
+port = int(os.environ.get("PORT", 5000))
+ 
 # app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
+app.config["MONGO_URI"] = "mongodb://heroku_r6c7r7n3:ruhocdtre5vj1bt4cf5bjep29j@ds237308.mlab.com:37308/heroku_r6c7r7n3?retryWrites=false"
 mongo.init_app(app)
 
 db = mongo.db
@@ -115,6 +125,6 @@ def handle_error(e):
 
 # module
 if __name__ == '__main__':
-    io.run(app, debug=True, port=int(os.environ.get("PORT", 5000)))
+    io.run(app, debug=True, host='0.0.0.0', port=port)
 
 
