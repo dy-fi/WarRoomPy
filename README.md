@@ -8,9 +8,9 @@ Pull data from anywhere on the web and make live graphs without being a programm
 
 You'll be prompted for a `URL` and `Xpath` to make a "place".  These places point to one piece of data we can collect to make a time-series graph.  
 
-A collection of places makes up the dashboards we call "Rooms", presenting them however you want, like this-
+A collection of places makes up the dashboards that we call "Rooms", presenting them however you want, like this-
 
-!["coinbase-example"](/static/coinbase-example.png)
+![coinbase-example](/static/coinbase-example.png) ![weather-example.png](/static/weather-example.png)
 
 
 # Road Map
