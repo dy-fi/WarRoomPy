@@ -15,9 +15,7 @@ A collection of places makes up the dashboards that we call "Rooms", presenting 
 
 # Road Map
 
-* Live graphs
-
-* Better frontend
+* live graphs in production
 
 * User Authentication
 
