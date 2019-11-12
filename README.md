@@ -38,7 +38,7 @@ The app should now be running on [localhost:5000](http://localhost:5000/). Make 
 
 ## Running Locally With Docker
 
-Coming soon!
+docker-compose up --build
 
 ---
 
