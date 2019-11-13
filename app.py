@@ -59,7 +59,7 @@ app.register_blueprint(target_bp)
 # ================Sockets==================
 
 
-io = SocketIO(app, async_mode="gevent")
+io = SocketIO(app, async_mode="gevent", async_handlers=True)
 clients = {}
 interval = 3
 
