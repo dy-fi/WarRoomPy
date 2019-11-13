@@ -1,6 +1,8 @@
 venv
 .env
 .vscode
-config.py
+config.cfg
 db.py
 .gif
+.DS_STORE
+__pycache__

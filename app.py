@@ -2,14 +2,20 @@ import gevent
 from gevent import monkey;
 monkey.patch_all()
 
-
 from flask import Flask
 from flask import render_template, url_for
 from flask_cors import CORS
-from bson import ObjectId
+# from flask.ext.bcrypt import Bcrypt
 from flask_socketio import SocketIO, send, emit
-from database import mongo
-import scrapper
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity
+)
+
+
+
+
+from bson import ObjectId
 import time
 import datetime 
 import json
@@ -17,21 +23,26 @@ import re
 import os
 import logging
 
-
+from database import mongo
+import scrapper
 
 # ==============Server Init================
 
 app = Flask(__name__)
 
-# enable CORS
-CORS(app)
+
 logging.getLogger('flask_cors').level = logging.DEBUG
 
 # config
 app.config.from_pyfile("config.cfg")
-app.config["SECRET_KEY"] = 'not the real secret lol'
-app.config["DEBUG"] = True
+app.config["SECRET_KEY"] = os.environ.get("SECRET", 'not the real secret lol')
+app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", 'not the real secret lol')
+app.config["JWT_COOKIE_CSRF_PROTECT"] = True
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 
+# switch in production
+app.config["JWT_COOKIE_SECURE"] = False
+app.config["DEBUG"] = True
 
 # ==================DB=====================
 
@@ -43,6 +54,17 @@ mongo.init_app(app)
 
 db = mongo.db
 
+
+# ==============Middleware=================
+
+# jwt wrapper
+jwt = JWTManager(app)
+
+# enable CORS
+CORS(app)
+
+# # bcrypt
+# bcrypt = Bcrypt(app)
 
 # ================Routes===================
 
@@ -59,7 +81,7 @@ app.register_blueprint(target_bp)
 # ================Sockets==================
 
 
-io = SocketIO(app, async_mode="gevent")
+io = SocketIO(app, async_mode="gevent", manage_session=False)
 clients = {}
 interval = 3
 
