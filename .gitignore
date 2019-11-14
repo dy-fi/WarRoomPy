@@ -1,6 +1,7 @@
 venv
 .env
 .vscode
+config.cfg 
 config.py
 db.py
 .gif

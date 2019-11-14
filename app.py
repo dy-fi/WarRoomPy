@@ -23,8 +23,11 @@ import logging
 
 app = Flask(__name__)
 
+port = int(os.environ.get("PORT", 5000))
 # enable CORS
 CORS(app)
+CORS(app, resources={r"/socket.io/*": {"origins": "https://war-room-py.herokuapp.com:" + str(port)}})
+
 logging.getLogger('flask_cors').level = logging.DEBUG
 
 # config
@@ -35,7 +38,6 @@ app.config["DEBUG"] = True
 
 # ==================DB=====================
 
-port = int(os.environ.get("PORT", 5000))
  
 # app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
 app.config["MONGO_URI"] = "mongodb://heroku_r6c7r7n3:ruhocdtre5vj1bt4cf5bjep29j@ds237308.mlab.com:37308/heroku_r6c7r7n3?retryWrites=false"
