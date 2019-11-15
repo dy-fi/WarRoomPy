@@ -70,11 +70,6 @@ def handle_connection():
     print("Connected to a client")
 
 
-@io.on("message")
-def handle_message(msg):
-    print(msg)
-
-
 @io.on("room")
 def handle_room(room_id):
     print("Room started")
@@ -96,21 +91,21 @@ def handle_room(room_id):
         while clients[room_id] == True:
             for place in places:
                 if place['output'] == 'int':
-                    # try:
-                    # data
-                    data = scrapper.ScrapeXpath(place["url"], place["path"], interval)
-                    # regex cleaning
-                    cleaned_val =  float(('').join(re.findall('[\d/.]', data)))  # [int(s) for s in data.split() if s.isdigit()]
-                    # timestamp
-                    t = int(time.time())
-                    print(t, data)
-                    # emit to client
-                    emit("point",{ "name": place["name"], "x": t, "y": cleaned_val })
-                    # sleep to not overload socket
-                    io.sleep(0.2)
-                    # except:
-                    #     t = int(time.time())
-                    #     emit("point",{ "name": place["name"], "x": t, "y": 0 })
+                    try:
+                        # data
+                        data = scrapper.ScrapeXpath(place["url"], place["path"], interval)
+                        # regex cleaning
+                        cleaned_val =  float(('').join(re.findall('[\d/.]', data)))  # [int(s) for s in data.split() if s.isdigit()]
+                        # timestamped here to avoid scrapper making it inaccurate
+                        t = int(time.time())
+                        print(t, data)
+                        # emit to client
+                        emit("point",{ "name": place["name"], "x": t, "y": cleaned_val })
+                        # sleep to not overload socket
+                        io.sleep(0.2)
+                    except:
+                        t = int(time.time())
+                        emit("point",{ "name": place["name"], "x": t, "y": 0 })
 
 
 @io.on('stop')

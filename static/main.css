@@ -63,10 +63,10 @@ img {
     margin: auto;
 }
 
-#place-card {    
-    border: solid grey 1px;
-    border-radius: 25px;
-    padding: 20%;
-    justify-content: center;
+.place-card {    
+    border-style: outset;
+    border-width: 3px;
+    border-color: lightgrey;
+    padding: 50px;
     margin: auto;
 }
