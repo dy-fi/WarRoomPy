@@ -5,3 +5,5 @@ config.cfg
 config.py
 db.py
 .gif
+__pycache__
+controllers/__pycache__
