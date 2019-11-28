@@ -31,7 +31,7 @@ CORS(app, resources={r"/socket.io/*": {"origins": "https://war-room-py.herokuapp
 logging.getLogger('flask_cors').level = logging.DEBUG
 
 # config
-app.config.from_pyfile("config.cfg")
+# app.config.from_pyfile("config.cfg")
 app.config["SECRET_KEY"] = 'not the real secret lol'
 app.config["DEBUG"] = True
 
