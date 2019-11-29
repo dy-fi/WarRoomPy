@@ -11,9 +11,15 @@
             <br><br>
             <a href="/how-to" class="link">How to Use</a>
             <br><br>
-            <a href="/login" class="link" >Login</a>
-            <br><br>
-            <a href="/Sign up" class="link">Sign up</a>
+            {% if user %}
+                <form method="DELETE" action="/logout">
+                    <button type='submit' class="link">Logout</button>
+                </form>
+            {% else %}
+                <a href="/login" class="link" >Login</a>
+                <br><br>
+                <a href="/sign-up" class="link">Sign up</a>
+            {% endif %}
         </div>
         <!-- <div class="col-sm-4 nav-link-right">
             

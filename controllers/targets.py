@@ -1,4 +1,3 @@
-
 from flask import Blueprint, render_template, redirect, url_for, request
 from database import mongo
 from bson import ObjectId
@@ -12,6 +11,7 @@ target_bp = Blueprint('target', __name__,template_folder='templates')
 interval = 3
 
 @target_bp.route("/target/form", methods = ["POST", "GET"])
+
 def make_room():
     """
     Create a new room or render room form depending on method

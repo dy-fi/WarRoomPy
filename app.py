@@ -7,13 +7,6 @@ from flask import render_template, url_for
 from flask_cors import CORS
 # from flask.ext.bcrypt import Bcrypt
 from flask_socketio import SocketIO, send, emit
-from flask_jwt_extended import (
-    JWTManager, jwt_required, create_access_token,
-    get_jwt_identity
-)
-
-
-
 
 from bson import ObjectId
 import time
@@ -29,22 +22,15 @@ import scrapper
 # ==============Server Init================
 
 app = Flask(__name__)
+app.app_context().push()
 
-<<<<<<< HEAD
-=======
 port = int(os.environ.get("PORT", 5000))
-# enable CORS
-CORS(app)
-CORS(app, resources={r"/socket.io/*": {"origins": "https://war-room-py.herokuapp.com:" + str(port)}})
->>>>>>> 16fad5388d830e9e82dae3632be4700cd27bd1a8
 
-logging.getLogger('flask_cors').level = logging.DEBUG
-
-# config
+# dev config
 app.config.from_pyfile("config.cfg")
 app.config["SECRET_KEY"] = os.environ.get("SECRET", 'not the real secret lol')
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", 'not the real secret lol')
-app.config["JWT_COOKIE_CSRF_PROTECT"] = True
+app.config["JWT_COOKIE_CSRF_PROTECT"] = False
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 
 # switch in production
@@ -53,24 +39,19 @@ app.config["DEBUG"] = True
 
 # ==================DB=====================
 
- 
-# app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
-app.config["MONGO_URI"] = "mongodb://heroku_r6c7r7n3:ruhocdtre5vj1bt4cf5bjep29j@ds237308.mlab.com:37308/heroku_r6c7r7n3?retryWrites=false"
+app.config["MONGO_URI"] = "mongodb://localhost:27017/wrdb"
+# app.config["MONGO_URI"] = "mongodb://heroku_r6c7r7n3:ruhocdtre5vj1bt4cf5bjep29j@ds237308.mlab.com:37308/heroku_r6c7r7n3?retryWrites=false"
 mongo.init_app(app)
 
 db = mongo.db
 
-
 # ==============Middleware=================
-
-# jwt wrapper
-jwt = JWTManager(app)
 
 # enable CORS
 CORS(app)
 
-# # bcrypt
-# bcrypt = Bcrypt(app)
+# CORS logging
+logging.getLogger('flask_cors').level = logging.DEBUG
 
 # ================Routes===================
 
@@ -78,11 +59,16 @@ from controllers.index import index_bp
 from controllers.places import place_bp
 from controllers.sockets import socket_bp
 from controllers.targets import target_bp
+from controllers.users import users_bp
+
+# register auth first so that JWT manager is available for other routes
+app.register_blueprint(users_bp)
 
 app.register_blueprint(index_bp)
 app.register_blueprint(place_bp)
 app.register_blueprint(socket_bp)
 app.register_blueprint(target_bp)
+
 
 # ================Sockets==================
 
@@ -149,5 +135,3 @@ def handle_error(e):
 # module
 if __name__ == '__main__':
     io.run(app, debug=True, host='0.0.0.0', port=port)
-
-
