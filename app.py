@@ -7,6 +7,7 @@ from flask import render_template, url_for
 from flask_cors import CORS
 # from flask.ext.bcrypt import Bcrypt
 from flask_socketio import SocketIO, send, emit
+from auth import auth
 
 from bson import ObjectId
 import time
@@ -29,12 +30,8 @@ port = int(os.environ.get("PORT", 5000))
 # dev config
 app.config.from_pyfile("config.cfg")
 app.config["SECRET_KEY"] = os.environ.get("SECRET", 'not the real secret lol')
-app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", 'not the real secret lol')
-app.config["JWT_COOKIE_CSRF_PROTECT"] = False
-app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 
 # switch in production
-app.config["JWT_COOKIE_SECURE"] = False
 app.config["DEBUG"] = True
 
 # ==================DB=====================
@@ -46,6 +43,7 @@ mongo.init_app(app)
 db = mongo.db
 
 # ==============Middleware=================
+
 
 # enable CORS
 CORS(app)

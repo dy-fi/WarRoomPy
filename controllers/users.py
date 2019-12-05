@@ -1,36 +1,29 @@
 from database import mongo
-from flask import Blueprint, render_template, request, jsonify, current_app, make_response, redirect, url_for
+from auth import auth
+
+from flask import Blueprint, render_template, request, jsonify, current_app, make_response, redirect, url_for,jsonify
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import (
-    JWTManager, jwt_required, create_access_token,
-    jwt_refresh_token_required, create_refresh_token,
-    get_jwt_identity, set_access_cookies,
-    set_refresh_cookies, unset_jwt_cookies, get_raw_jwt
-)
+from bson import ObjectId, json_util
+from flask_httpauth import HTTPBasicAuth
+import json
+
+from models.user import User
+
 
 db = mongo.db
 users_bp = Blueprint('users', __name__, template_folder='templates')
 
-jwt = JWTManager(current_app)
 bcrypt = Bcrypt(current_app)
 
-# blacklist
-blacklist = set()
+def validate_login(password_hash, password):
+    return bcrypt.check_password_hash(password_hash, password)
 
-def _authenticate(username, url):
-    access_token = create_access_token(identity=username)
-    refresh_token = create_refresh_token(identity=username)
-    resp = make_response(redirect(url_for(url)))
-    set_access_cookies(resp, access_token)
-    set_refresh_cookies(resp, refresh_token)
-    return resp
 
-# blacklist for logout
-@jwt.token_in_blacklist_loader
-def check_if_token_in_blacklist(decrypted_token):
-    jti = decrypted_token['jti']
-    return jti in blacklist
-    
+@auth.verify_password
+def verify_password(username, password):
+    user = db.users.find_one({'username' : username})
+    return validate_login(user['password'], password)
+
 @users_bp.route('/login', methods=['GET', 'POST'])
 def login():
 
@@ -44,13 +37,15 @@ def login():
         if not username or not password:
             return render_template("error.html", err="We need both a username and password")
         
+        # database entry
         user = db.users.find_one({'username': username })
 
         if not user:
             return render_template("error.html", err="No users with those credentials were found")
 
-        if bcrypt.check_password_hash(user['password'], password):
-            return _authenticate(username, "target.show_rooms")
+        if validate_login(user['password'], password):
+            
+            return redirect(url_for("target.show_rooms"))
         else:
             return render_template("error.html", err="No users with those credentials were found")
 
@@ -79,17 +74,19 @@ def signup():
         newUser = {
             'username': username,
             'password': hashed_password,
-            'admin': False
+            'targets': [],
+            'banned': False,
+            'admin': False,
         }
 
         db.users.insert_one(newUser)
-
-        return _authenticate(username, "target.show_rooms")
+        user_model = User(username)
+        
+        return redirect(url_for("index.index"))
+        
 
 @users_bp.route('/logout', methods=['GET'])
-@jwt_required
+@login_required
 def logout():
-    jti = get_raw_jwt()['jti']
-    blacklist.add(jti)
-    return render_template("index.html")
-
+ 
+   return redirect(url_for("index.index"))

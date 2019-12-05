@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request
+from flask_login import login_required
 from database import mongo
 from bson import ObjectId
 import re
@@ -11,7 +12,6 @@ target_bp = Blueprint('target', __name__,template_folder='templates')
 interval = 3
 
 @target_bp.route("/target/form", methods = ["POST", "GET"])
-
 def make_room():
     """
     Create a new room or render room form depending on method
@@ -57,6 +57,7 @@ def show_rooms():
     show all rooms
     test route, remove in PROD
     """
+
     rooms = db.rooms.find({})
     return render_template("rooms.html", rooms=rooms)
 

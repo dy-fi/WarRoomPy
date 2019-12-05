@@ -9,7 +9,6 @@ dnspython==1.16.0
 Flask==1.1.1
 Flask-Bcrypt==0.7.1
 Flask-Cors==3.0.8
-Flask-JWT-Extended==3.24.1
 Flask-Login==0.4.1
 Flask-PyMongo==2.3.0
 Flask-SocketIO==4.2.1
@@ -23,6 +22,7 @@ lazy-object-proxy==1.4.2
 lxml==4.4.1
 MarkupSafe==1.1.1
 mccabe==0.6.1
+mongoengine==0.18.2
 monotonic==1.5
 protobuf==3.10.0
 pycparser==2.19

@@ -7,19 +7,21 @@
             <img src="{{ url_for("static", filename="war-room-logo-name.png") }}" alt='logo' style='height:325px; '>
         </div>
         <div class="nav-link-right" style='margin-top:-2%; margin-left:33%;'>
-            <a href="/targets" class="link">Rooms</a>
-            <br><br>
+            
             <a href="/how-to" class="link">How to Use</a>
             <br><br>
-            {% if user %}
-                <form method="DELETE" action="/logout">
-                    <button type='submit' class="link">Logout</button>
-                </form>
-            {% else %}
+                <a href="/targets" class="link">Rooms</a>
+                <br><br>
                 <a href="/login" class="link" >Login</a>
                 <br><br>
                 <a href="/sign-up" class="link">Sign up</a>
-            {% endif %}
+            <!--
+                <a href="/targets" class="link">Rooms</a>
+                <br><br>
+                <form method="DELETE" action="/logout">
+                    <a href="/" type='submit' class="link">Logout</a>
+                </form>
+            -->
         </div>
         <!-- <div class="col-sm-4 nav-link-right">
             
@@ -28,12 +30,16 @@
 </div>
 <br>
 <div class='row index-bottom-wrapper' style='margin-top:45%;'>
-    <div class='col-sm-6' style='margin-top:5%; margin-left:-6%; padding-right:3%; padding-bottom:-2px;'>
+    <div class='col-sm-6' style='margin-left:-6%; padding-right:3%; padding-bottom:-2px;'>
         <p>
-            War Room was built to give the internet X and Y coordinates.  
+            <b>War Room was built to give the internet X and Y coordinates.  </b>
             <br><br>
-            You don't need to be a programmer to scrape data from anywhere on the web and generate live
-            charts in seconds.  
+            You can specify a single piece of data within a website, 
+            anywhere on the internet, and start making live dashboards
+            in 2 copy and pastes.
+            <br><br>
+            Sneakerbots, custom stock/cryptocurrency dashboards, and 
+            anything in between have never been easier.  
         </p>
         <br>
         <a class='btn btn-block btn-outline-primary' href="/target/form">Create a room</a>
