@@ -16,6 +16,7 @@ def ScrapeXpath(url, path, interval):
             page = requests.get(url)
             tree = html.fromstring(page.content)
             text = tree.xpath(path + "/text()")
+            if text != None: break
             
     try:
         return text[0]

@@ -17,6 +17,7 @@
             <br>
             <a class='btn btn-block btn-primary' href="{{url_for("target.target", room_id = room_id) }}">Static</a>
             <a class='btn btn-block btn-success' href="{{url_for("sockets.targetWS", room_id = room_id) }}">Live</a>
+            <a class='btn btn-block btn-danger' href="{{url_for("target.delete_target", room_id = room_id) }}">Delete</a>
         </div>
     {% endfor %}
 </div>

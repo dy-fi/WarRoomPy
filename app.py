@@ -17,11 +17,13 @@ import re
 import os
 import logging
 
-
+# desktop gui
+from flaskwebgui import FlaskUI
 
 # ==============Server Init================
 
 app = Flask(__name__)
+ui = FlaskUI(app)
 
 port = int(os.environ.get("PORT", 5000))
 # enable CORS
@@ -119,9 +121,11 @@ def bye(msg):
 def handle_error(e):
     print(e)
 
+def start():
+    io.run(app, debug=True, host='0.0.0.0', port=port)
+
 
 # module
 if __name__ == '__main__':
-    io.run(app, debug=True, host='0.0.0.0', port=port)
-
+    ui.run()
 

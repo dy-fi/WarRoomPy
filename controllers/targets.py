@@ -114,3 +114,11 @@ def target(room_id):
         result.append(d)
     
     return render_template("room.html", room=room, data=result)
+
+@target_bp.route("/targets/<room_id>/delete", methods=["DELETE", "POST"])
+def delete_target(room_id):
+    try:
+        db.rooms.remove({"_id" : ObjectId(oid=str("room_id"))})
+        return redirect("/")
+    except:
+        return render_template("error.html", msg="Error", err="Couldn't Delete")
